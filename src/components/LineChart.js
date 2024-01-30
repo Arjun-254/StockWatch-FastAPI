@@ -23,7 +23,7 @@ export default function LineChart({ symbol }) {
       try {
         const ticker = symbol === 2 ? "^BSESN" : "^NSEI";
         const response = await axios.post(
-          "http://127.0.0.1:8000/yfin",
+          "https://stockwatch-backend-p3zq.onrender.com/yfin",
           {
             ticker: ticker,
           },

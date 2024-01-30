@@ -66,14 +66,17 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(password);
-    const res = await axios.post("http://127.0.0.1:8000/signup", {
-      username: email,
-      password: password,
-      first_name: firstName, // Include first name in the request payload
-      last_name: lastName, // Include last name in the request payload
-      age: age,
-      gender: gender,
-    });
+    const res = await axios.post(
+      "https://stockwatch-backend-p3zq.onrender.com/signup",
+      {
+        username: email,
+        password: password,
+        first_name: firstName, // Include first name in the request payload
+        last_name: lastName, // Include last name in the request payload
+        age: age,
+        gender: gender,
+      }
+    );
 
     console.log(res);
 

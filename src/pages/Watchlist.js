@@ -23,7 +23,7 @@ export default function Watchlist() {
     const fetchData = async () => {
       try {
         const res = await axios.post(
-          "http://127.0.0.1:8000/getlists",
+          "https://stockwatch-backend-p3zq.onrender.com/getlists",
           {},
           {
             headers: {

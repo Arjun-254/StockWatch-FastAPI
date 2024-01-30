@@ -143,7 +143,7 @@ export default function PreferencesForm() {
     const fetchData = async () => {
       try {
         const res = await axios.post(
-          "http://127.0.0.1:8000/getlists",
+          "https://stockwatch-backend-p3zq.onrender.com/getlists",
           {},
           {
             headers: {
@@ -191,7 +191,7 @@ export default function PreferencesForm() {
     // Perform the post request to the server with the selected data
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/updatelists",
+        "https://stockwatch-backend-p3zq.onrender.com/updatelists",
         {
           watch_list: watchList,
           stock_list: stockList,

@@ -92,7 +92,7 @@ export default function Stock({ ticker }) {
       try {
         setLoading(true);
         const response = await axios.post(
-          "http://127.0.0.1:8000/yfin",
+          "https://stockwatch-backend-p3zq.onrender.com/yfin",
           {
             ticker: ticker,
           },

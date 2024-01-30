@@ -38,7 +38,7 @@ const Login = () => {
     e.preventDefault();
     //console.log(password);
     const res = await axios.post(
-      "http://127.0.0.1:8000/login",
+      "https://stockwatch-backend-p3zq.onrender.com/login",
       {
         username: email,
         password: password,
