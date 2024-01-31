@@ -17,7 +17,7 @@ export default function PreferencesForm() {
   const navigate = useNavigate();
 
   const stockOptions = [
-    { value: "BRTI.NS", label: "Bharti Airtel Limited" },
+    { value: "BHARTIARTL.NS", label: "Bharti Airtel Limited" },
     { value: "POWERGRID.NS", label: "Power Grid Corporation of India" },
     { value: "ICICIBANK.NS", label: "ICICI Bank Limited" },
     { value: "ASIANPAINT.NS", label: "Asian Paints Limited" },
@@ -76,7 +76,7 @@ export default function PreferencesForm() {
   ];
 
   const watchlistOptions = [
-    { value: "BRTI.NS", label: "Bharti Airtel Limited" },
+    { value: "BHARTIARTL.NS", label: "Bharti Airtel Limited" },
     { value: "POWERGRID.NS", label: "Power Grid Corporation of India" },
     { value: "ICICIBANK.NS", label: "ICICI Bank Limited" },
     { value: "ASIANPAINT.NS", label: "Asian Paints Limited" },

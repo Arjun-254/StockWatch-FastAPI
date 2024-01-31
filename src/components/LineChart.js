@@ -17,6 +17,8 @@ export default function LineChart({ symbol }) {
   });
 
   const [lastClosePrice, setLastClosePrice] = useState("");
+  const [secondLastClosePrice, setSecondLastClosePrice] = useState("");
+  const [percentageChange, setPercentageChange] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +59,16 @@ export default function LineChart({ symbol }) {
 
         if (sortedData.length > 0) {
           const lastClose = sortedData[sortedData.length - 1].closePrice;
+          const secondLastClose = sortedData[sortedData.length - 2].closePrice;
           setLastClosePrice(lastClose.toFixed(2).toLocaleString());
+          setSecondLastClosePrice(secondLastClose.toFixed(2).toLocaleString());
+
+          // Calculate the percentage change
+          const change = lastClose - secondLastClose;
+          const percentageChange = ((change / secondLastClose) * 100).toFixed(
+            2
+          );
+          setPercentageChange(percentageChange);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -83,6 +94,7 @@ export default function LineChart({ symbol }) {
     },
   };
 
+  const colour = percentageChange >= 0 ? "bg-green-600" : "bg-red-600";
   return (
     <div className="bg-gray-800 px-3 py-2 mx-2 rounded-lg flex flex-col w-full">
       <div className="flex flex-row justify-between items-center pb-1">
@@ -96,7 +108,9 @@ export default function LineChart({ symbol }) {
             Sensex (^BSESN)
           </h1>
         )}
-        <p className="ml-2 text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-xl bg-gray-700 p-1 rounded-lg">
+        <p
+          className={`ml-2 text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-xl ${colour} bg-opacity-80 p-1 rounded-lg`}
+        >
           {lastClosePrice}
         </p>
       </div>

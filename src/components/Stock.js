@@ -25,7 +25,7 @@ export default function Stock({ ticker }) {
   const [percentageChange, setPercentageChange] = useState("");
 
   const stockOptions = [
-    { value: "BRTI.NS", label: "Bharti Airtel Limited" },
+    { value: "BHARTIARTL.NS", label: "Bharti Airtel Limited" },
     { value: "POWERGRID.NS", label: "Power Grid Corporation of India" },
     { value: "ICICIBANK.NS", label: "ICICI Bank Limited" },
     { value: "ASIANPAINT.NS", label: "Asian Paints Limited" },
@@ -175,7 +175,7 @@ export default function Stock({ ticker }) {
   return (
     <div>
       <Tilt tiltMaxAngleX={4} tiltMaxAngleY={4}>
-        <li className="flex justify-between gap-x-6 p-5 rounded-lg bg-gray-700 mb-1">
+        <li className="flex justify-between p-3 rounded-lg bg-gray-700 mb-1">
           <div className="flex gap-x-4">
             {loading ? (
               <div className="animate-pulse">
@@ -183,11 +183,11 @@ export default function Stock({ ticker }) {
                 <div className="bg-gray-500 h-4 w-36 rounded-md"></div>
               </div>
             ) : (
-              <div className="min-w-0 flex flex-col items-start">
+              <div className=" flex flex-col items-start">
                 <p className="text-sm font-bold leading-5 text-white">
                   {ticker}
                 </p>
-                <p className="mt-1 truncate text-xs leading-5 text-slate-400 overflow-auto">
+                <p className="mt-1 truncate text-[10px] leading-5 w-1/2 text-slate-400 overflow-auto">
                   {stockLabel}
                 </p>
               </div>
@@ -199,11 +199,11 @@ export default function Stock({ ticker }) {
                 <Line data={chartData} options={chartOptions} />
               </div>
               <div className="flex flex-col items-end">
-                <p className="text-sm font-bold leading-6 text-white">
+                <p className="text-sm font-extrabold leading-6 text-white">
                   {lastClosePrice}
                 </p>
                 <p
-                  className={`mt-1 text-sm leading-5 ${colour} p-1 rounded-md text-white`}
+                  className={`mt-1 text-sm font-bold leading-5 ${colour} py-1 px-2 rounded-md text-white`}
                 >
                   {percentageChange}%
                 </p>

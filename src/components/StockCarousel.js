@@ -38,7 +38,7 @@ export default function StockCarousel({ color }) {
         modules={[Autoplay, Navigation]}
         style={{ width: "100%" }}
         breakpoints={{
-          640: {
+          1100: {
             slidesPerView: 3,
           },
         }}

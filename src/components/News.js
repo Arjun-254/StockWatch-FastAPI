@@ -16,25 +16,21 @@ export default function News() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const currentDate = new Date();
-        const lastMonthDate = new Date();
-        lastMonthDate.setMonth(currentDate.getMonth() - 1);
+        // const currentDate = new Date();
+        // const lastMonthDate = new Date();
+        // lastMonthDate.setMonth(currentDate.getMonth() - 1);
 
-        const formattedCurrentDate = currentDate.toISOString().split("T")[0];
-        const formattedLastMonthDate = lastMonthDate
-          .toISOString()
-          .split("T")[0];
-
+        // const formattedCurrentDate = currentDate.toISOString().split("T")[0];
+        // const formattedLastMonthDate = lastMonthDate
+        //   .toISOString()
+        //   .split("T")[0];
+        //https://newsapi.org/v2/everything?q=indian%20stock%20market%20economy&from=${formattedLastMonthDate}&to=${formattedCurrentDate}&sortBy=publishedAt&language=en&apiKey=baea8a5de1a74cfc93627e7a4ca3a4d4
         const response = await fetch(
-          `https://newsapi.org/v2/everything?q=indian%20stock%20market%20economy&from=${formattedLastMonthDate}&to=${formattedCurrentDate}&sortBy=publishedAt&language=en&apiKey=baea8a5de1a74cfc93627e7a4ca3a4d4`
+          `https://newsdata.io/api/1/news?apikey=pub_37443c86e03e4a7e9543ef652dad23b0b89ca&q=indian%20stock%20market%20economy`
         );
         const data = await response.json();
-
-        const sortedArticles = data.articles.sort((a, b) => {
-          const dateA = new Date(a.publishedAt);
-          const dateB = new Date(b.publishedAt);
-          return dateB - dateA;
-        });
+        console.log(data.results);
+        const sortedArticles = data.results;
 
         setArticles(sortedArticles);
 
@@ -91,9 +87,9 @@ export default function News() {
                 </h2>
               </div>
               <div className="flex-shrink-0">
-                {article.urlToImage ? (
+                {article.image_url ? (
                   <img
-                    src={article.urlToImage}
+                    src={article.image_url}
                     alt={article.title}
                     className="w-full h-auto rounded-lg"
                     style={{ aspectRatio: "16/9" }}
