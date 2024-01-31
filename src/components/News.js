@@ -104,7 +104,9 @@ export default function News() {
                 )}
               </div>
               <a
-                href={article.url}
+                href={article.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-white bg-blue-600 rounded-lg px-4 py-1 mt-1 block text-center"
               >
                 Read
