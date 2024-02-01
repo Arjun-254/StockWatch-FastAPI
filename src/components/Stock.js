@@ -25,63 +25,61 @@ export default function Stock({ ticker }) {
   const [percentageChange, setPercentageChange] = useState("");
 
   const stockOptions = [
-    { value: "BHARTIARTL.NS", label: "Bharti Airtel Limited" },
-    { value: "POWERGRID.NS", label: "Power Grid Corporation of India" },
-    { value: "ICICIBANK.NS", label: "ICICI Bank Limited" },
-    { value: "ASIANPAINT.NS", label: "Asian Paints Limited" },
-    { value: "BRITANNIA.NS", label: "Britannia Industries Limited" },
-    { value: "INFY.NS", label: "Infosys Limited" },
-    { value: "NTPC.NS", label: "NTPC Limited" },
-    { value: "CIPLA.NS", label: "Cipla Limited" },
-    { value: "ONGC.NS", label: "Oil and Natural Gas Corporation Limited" },
-    { value: "HDFCBANK.NS", label: "HDFC Bank Limited" },
-    { value: "SUNPHARMA.NS", label: "Sun Pharmaceutical Industries Limited" },
-    { value: "EICHERMOT.NS", label: "Eicher Motors Limited" },
-    { value: "TECHM.NS", label: "Tech Mahindra Limited" },
-    { value: "M&M.NS", label: "Mahindra & Mahindra Limited" },
-    { value: "AXISBANK.NS", label: "Axis Bank Limited" },
-    { value: "RELIANCE.NS", label: "Reliance Industries Limited" },
-    { value: "WIPRO.NS", label: "Wipro Limited" },
-    { value: "HINDALCO.NS", label: "Hindalco Industries Limited" },
-    { value: "HINDUNILVR.NS", label: "Hindustan Unilever Limited" },
-    { value: "SBILIFE.NS", label: "SBI Life Insurance Company Limited" },
-    { value: "ULTRACEMCO.NS", label: "UltraTech Cement Limited" },
-    { value: "APOLLOHOSP.NS", label: "Apollo Hospitals Enterprise Limited" },
-    {
-      value: "HDFC.NS",
-      label: "Housing Development Finance Corporation Limited",
-    },
-    { value: "BAJAJFINSV.NS", label: "Bajaj Finserv Limited" },
-    { value: "COALINDIA.NS", label: "Coal India Limited" },
-    { value: "DRREDDY.NS", label: "Dr. Reddy's Laboratories Limited" },
-    { value: "ITC.NS", label: "ITC Limited" },
-    { value: "HEROMOTOCO.NS", label: "Hero MotoCorp Limited" },
-    { value: "DIVISLAB.NS", label: "Divi's Laboratories Limited" },
-    { value: "GRASIM.NS", label: "Grasim Industries Limited" },
-    { value: "HCLTECH.NS", label: "HCL Technologies Limited" },
-    { value: "TCS.NS", label: "Tata Consultancy Services Limited" },
-    { value: "UPL.NS", label: "UPL Limited" },
-    { value: "KOTAKBANK.NS", label: "Kotak Mahindra Bank Limited" },
-    { value: "TATACONSUM.NS", label: "Tata Consumer Products Limited" },
-    { value: "INDUSINDBK.NS", label: "IndusInd Bank Limited" },
-    { value: "JSWSTEEL.NS", label: "JSW Steel Limited" },
-    { value: "LT.NS", label: "Larsen & Toubro Limited" },
-    { value: "SBIN.NS", label: "State Bank of India" },
-    { value: "TATAMOTORS.NS", label: "Tata Motors Limited" },
-    { value: "HDFCLIFE.NS", label: "HDFC Life Insurance Company Limited" },
-    { value: "MARUTI.NS", label: "Maruti Suzuki India Limited" },
-    { value: "BPCL.NS", label: "Bharat Petroleum Corporation Limited" },
-    { value: "TITAN.NS", label: "Titan Company Limited" },
-    { value: "BAJFINANCE.NS", label: "Bajaj Finance Limited" },
+    { value: "ADANIENT.NS", label: "Adani Enterprises Limited" },
     {
       value: "ADANIPORTS.NS",
       label: "Adani Ports and Special Economic Zone Limited",
     },
-    { value: "NESTLEIND.NS", label: "Nestlé India Limited" },
-    { value: "TATASTEEL.NS", label: "Tata Steel Limited" },
-    { value: "ADANIENT.NS", label: "Adani Enterprises Limited" },
+    { value: "APOLLOHOSP.NS", label: "Apollo Hospitals Enterprise Limited" },
+    { value: "ASIANPAINT.NS", label: "Asian Paints Limited" },
+    { value: "AXISBANK.NS", label: "Axis Bank Limited" },
     { value: "BAJAJ-AUTO.NS", label: "Bajaj Auto Limited" },
+    { value: "BAJFINANCE.NS", label: "Bajaj Finance Limited" },
+    { value: "BAJAJFINSV.NS", label: "Bajaj Finserv Limited" },
+    { value: "BPCL.NS", label: "Bharat Petroleum Corporation Limited" },
+    { value: "BHARTIARTL.NS", label: "Bharti Airtel Limited" },
+    { value: "BRITANNIA.NS", label: "Britannia Industries Limited" },
+    { value: "CIPLA.NS", label: "Cipla Limited" },
+    { value: "COALINDIA.NS", label: "Coal India Limited" },
+    { value: "DIVISLAB.NS", label: "Divi's Laboratories Limited" },
+    { value: "DRREDDY.NS", label: "Dr. Reddy's Laboratories Limited" },
+    { value: "EICHERMOT.NS", label: "Eicher Motors Limited" },
+    { value: "GRASIM.NS", label: "Grasim Industries Limited" },
+    { value: "HCLTECH.NS", label: "HCL Technologies Limited" },
+    { value: "HDFCBANK.NS", label: "HDFC Bank Limited" },
+    { value: "HDFCLIFE.NS", label: "HDFC Life Insurance Company Limited" },
+    { value: "HEROMOTOCO.NS", label: "Hero MotoCorp Limited" },
+    { value: "HINDALCO.NS", label: "Hindalco Industries Limited" },
+    { value: "HINDUNILVR.NS", label: "Hindustan Unilever Limited" },
+    { value: "ICICIBANK.NS", label: "ICICI Bank Limited" },
+    { value: "ITC.NS", label: "ITC Limited" },
+    { value: "INDUSINDBK.NS", label: "IndusInd Bank Limited" },
+    { value: "INFY.NS", label: "Infosys Limited" },
+    { value: "JSWSTEEL.NS", label: "JSW Steel Limited" },
+    { value: "KOTAKBANK.NS", label: "Kotak Mahindra Bank Limited" },
+    { value: "LTIM.NS", label: "Larsen & Toubro Limited" },
+    { value: "LT.NS", label: "Larsen & Toubro Limited" },
+    { value: "M&M.NS", label: "Mahindra & Mahindra Limited" },
+    { value: "MARUTI.NS", label: "Maruti Suzuki India Limited" },
+    { value: "NTPC.NS", label: "NTPC Limited" },
+    { value: "NESTLEIND.NS", label: "Nestlé India Limited" },
+    { value: "ONGC.NS", label: "Oil and Natural Gas Corporation Limited" },
+    { value: "POWERGRID.NS", label: "Power Grid Corporation of India" },
+    { value: "RELIANCE.NS", label: "Reliance Industries Limited" },
+    { value: "SBILIFE.NS", label: "SBI Life Insurance Company Limited" },
+    { value: "SBIN.NS", label: "State Bank of India" },
+    { value: "SUNPHARMA.NS", label: "Sun Pharmaceutical Industries Limited" },
+    { value: "TCS.NS", label: "Tata Consultancy Services Limited" },
+    { value: "TATACONSUM.NS", label: "Tata Consumer Products Limited" },
+    { value: "TATAMOTORS.NS", label: "Tata Motors Limited" },
+    { value: "TATASTEEL.NS", label: "Tata Steel Limited" },
+    { value: "TECHM.NS", label: "Tech Mahindra Limited" },
+    { value: "TITAN.NS", label: "Titan Company Limited" },
+    { value: "UPL.NS", label: "UPL Limited" },
+    { value: "ULTRACEMCO.NS", label: "UltraTech Cement Limited" },
+    { value: "WIPRO.NS", label: "Wipro Limited" },
   ];
+
   const stockOptionsDict = stockOptions.reduce((acc, option) => {
     acc[option.value] = option.label;
     return acc;
@@ -110,20 +108,6 @@ export default function Stock({ ticker }) {
         const sortedData = data.sort(
           (a, b) => new Date(a.date) - new Date(b.date)
         );
-        const chartDataUpdated = {
-          labels: sortedData.map((item) =>
-            new Date(item.date).toLocaleDateString()
-          ), // Using 'date' as labels
-          datasets: [
-            {
-              ...chartData.datasets[0],
-              data: sortedData.map((item) => item.closePrice), // Using 'closePrice' as data
-              borderColor: "white", // Set graph color based on percentage change
-            },
-          ],
-        };
-
-        setChartData(chartDataUpdated);
 
         // Update the lastClosePrice and secondLastClosePrice states with the last two close prices from the API response
         if (sortedData.length >= 2) {
@@ -137,7 +121,27 @@ export default function Stock({ ticker }) {
           const percentageChange = ((change / secondLastClose) * 100).toFixed(
             2
           );
+
           setPercentageChange(percentageChange);
+          const lineColor = percentageChange >= 0 ? "green" : "red";
+
+          const chartDataUpdated = {
+            labels: sortedData.map((item) => {
+              const date = new Date(item.date);
+              // Format date and time
+              const formattedDateTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+              return formattedDateTime;
+            }),
+            datasets: [
+              {
+                ...chartData.datasets[0],
+                data: sortedData.map((item) => item.closePrice), // Using 'closePrice' as data
+                borderColor: lineColor, // Set graph color based on percentage change
+              },
+            ],
+          };
+
+          setChartData(chartDataUpdated);
         }
         setLoading(false);
       } catch (error) {
@@ -165,7 +169,7 @@ export default function Stock({ ticker }) {
     },
     elements: {
       point: {
-        radius: 1.5, // Set the radius of the data points to 0 to remove dots
+        radius: 0.1, // Set the radius of the data points to 0 to remove dots
       },
     },
   };

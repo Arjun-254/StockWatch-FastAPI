@@ -12,10 +12,11 @@ SwiperCore.use([Navigation]);
 export default function News() {
   const [articles, setArticles] = useState([]);
   const [placeholderImageUrl, setPlaceholderImageUrl] = useState("");
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // const currentDate = new Date();
         // const lastMonthDate = new Date();
         // lastMonthDate.setMonth(currentDate.getMonth() - 1);
@@ -37,7 +38,9 @@ export default function News() {
         if (sortedArticles.length > 0) {
           setPlaceholderImageUrl(image);
         }
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error fetching data:", error);
       }
     };
@@ -78,40 +81,47 @@ export default function News() {
             key={article.title}
             style={{ width: "305px", height: "17.5rem" }}
           >
-            <div className="bg-gray-800 p-3 h-full rounded-lg flex flex-col justify-between overflow-y-auto no-scrollbar">
-              <div className="flex-grow">
-                <h2
-                  className={`text-white text-left text-sm md:text-[12px] font-bold mb-4`}
+            {loading ? (
+              <div className="bg-gray-800 p-3 h-full rounded-lg flex flex-col justify-between overflow-y-auto no-scrollbar animate-pulse">
+                <div className="bg-gray-400 h-16 w-full mb-2 rounded-md" />
+                <div className="bg-gray-400 h-72 w-full mb-2 rounded-md" />
+              </div>
+            ) : (
+              <div className="bg-gray-800 p-3 h-full rounded-lg flex flex-col justify-between overflow-y-auto no-scrollbar">
+                <div className="flex-grow">
+                  <h2
+                    className={`text-white text-left text-[16px] md:text-[12px] font-bold mb-4`}
+                  >
+                    {truncateTitle(article.title, 10)}
+                  </h2>
+                </div>
+                <div className="flex-shrink-0">
+                  {article.image_url ? (
+                    <img
+                      src={article.image_url}
+                      alt={article.title}
+                      className="w-full h-auto rounded-lg"
+                      style={{ aspectRatio: "16/9" }}
+                    />
+                  ) : (
+                    <img
+                      src={placeholderImageUrl}
+                      alt="Placeholder"
+                      className="w-full h-auto rounded-lg"
+                      style={{ aspectRatio: "16/9" }}
+                    />
+                  )}
+                </div>
+                <a
+                  href={article.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white bg-blue-600 rounded-lg px-4 py-1 mt-1 block text-center"
                 >
-                  {truncateTitle(article.title, 10)}
-                </h2>
+                  Read
+                </a>
               </div>
-              <div className="flex-shrink-0">
-                {article.image_url ? (
-                  <img
-                    src={article.image_url}
-                    alt={article.title}
-                    className="w-full h-auto rounded-lg"
-                    style={{ aspectRatio: "16/9" }}
-                  />
-                ) : (
-                  <img
-                    src={placeholderImageUrl}
-                    alt="Placeholder"
-                    className="w-full h-auto rounded-lg"
-                    style={{ aspectRatio: "16/9" }}
-                  />
-                )}
-              </div>
-              <a
-                href={article.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white bg-blue-600 rounded-lg px-4 py-1 mt-1 block text-center"
-              >
-                Read
-              </a>
-            </div>
+            )}
           </SwiperSlide>
         ))}
       </Swiper>
