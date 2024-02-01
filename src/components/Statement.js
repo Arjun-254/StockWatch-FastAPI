@@ -30,6 +30,14 @@ export default function Statement() {
                     Get Started <span aria-hidden="true">&rarr;</span>
                   </a>
                 )}
+                {token && (
+                  <a
+                    href="/dashboard"
+                    className="mt-5 rounded-md border border-transparent bg-indigo-600 py-3 px-6 font-medium text-white hover:bg-blue-700"
+                  >
+                    Dashboard <span aria-hidden="true">&rarr;</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>
