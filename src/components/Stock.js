@@ -101,7 +101,7 @@ export default function Stock({ ticker }) {
           }
         );
 
-        const data = response.data;
+        const data = response.data.stockPrices;
         //console.log(data);
 
         // Assuming the API response is an array of objects with 'closePrice' and 'date' properties
@@ -112,7 +112,7 @@ export default function Stock({ ticker }) {
         // Update the lastClosePrice and secondLastClosePrice states with the last two close prices from the API response
         if (sortedData.length >= 2) {
           const lastClose = sortedData[sortedData.length - 1].closePrice;
-          const secondLastClose = sortedData[sortedData.length - 2].closePrice;
+          const secondLastClose = response.data.prevClose;
           setLastClosePrice(lastClose.toFixed(2).toLocaleString());
           setSecondLastClosePrice(secondLastClose.toFixed(2).toLocaleString());
 

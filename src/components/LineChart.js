@@ -38,8 +38,8 @@ export default function LineChart({ symbol }) {
             },
           }
         );
-
-        const data = response.data;
+        //console.log(response);
+        const data = response.data.stockPrices;
         //console.log(data);
 
         const sortedData = data.sort(
@@ -48,7 +48,7 @@ export default function LineChart({ symbol }) {
 
         if (sortedData.length > 0) {
           const lastClose = sortedData[sortedData.length - 1].closePrice;
-          const secondLastClose = sortedData[sortedData.length - 2].closePrice;
+          const secondLastClose = response.data.prevClose;
           setLastClosePrice(lastClose.toFixed(2).toLocaleString());
           setSecondLastClosePrice(secondLastClose.toFixed(2).toLocaleString());
 
@@ -130,16 +130,21 @@ export default function LineChart({ symbol }) {
           <div className="flex flex-row justify-between items-center pb-1">
             {symbol === 1 && (
               <h1 className="text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-2xl">
-                Nifty-50(^NSEI)
+                Nifty-50
               </h1>
             )}
             {symbol === 2 && (
               <h1 className="text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-2xl">
-                Sensex (^BSESN)
+                Sensex
               </h1>
             )}
             <p
-              className={`ml-2 text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-xl ${colour} bg-opacity-80 p-1 rounded-lg`}
+              className={`mt-1 text-lg md:text-xl font-bold leading-5 ${colour} py-1 px-2 rounded-md text-white`}
+            >
+              {percentageChange}%
+            </p>
+            <p
+              className={`ml-2 text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-xl  p-1 rounded-lg`}
             >
               {lastClosePrice}
             </p>

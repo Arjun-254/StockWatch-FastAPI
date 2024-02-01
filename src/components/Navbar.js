@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import image from "./assets/image1.png";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [logged, setLogged] = useState(false);
 
   useEffect(() => {
-    // Check if JWT token is present in local storage
     const token = localStorage.getItem("jwt");
+
     if (token) {
-      setLogged(true);
+      // Decode the token to get its expiration date
+      const decodedToken = jwtDecode(token);
+
+      if (decodedToken && decodedToken.exp * 1000 > Date.now()) {
+        // Token is valid and has not expired
+        setLogged(true);
+      } else {
+        // Token is either invalid or expired, perform logout
+        handleLogOut();
+      }
     } else {
       setLogged(false);
     }
-  }, []); // Empty dependency array ensures that this effect runs only once, similar to componentDidMount
+  }, []);
 
   const handleLogOut = () => {
     // Remove JWT token from local storage on logout
@@ -43,6 +53,12 @@ const Navbar = () => {
               onClick={() => navigate("/")}
             >
               Home
+            </a>
+            <a
+              className="text-md font-semibold leading-6 text-gray-200 hover:font-extrabold hover:shadow-xl transition-all ease-in duration-100 p-2 rounded-lg"
+              onClick={() => navigate("/Dashboard")}
+            >
+              Dashboard
             </a>
           </div>
           <div className="flex flex-1 justify-end">

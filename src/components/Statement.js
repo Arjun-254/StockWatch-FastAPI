@@ -2,6 +2,7 @@ import React from "react";
 import Threemodel from "./Threemodel";
 
 export default function Statement() {
+  const token = localStorage.getItem("jwt");
   return (
     <div className="overflow-hidden py-12 sm:py-18">
       <div className="mx-auto max-w-7xl px-10 lg:px-14">
@@ -21,12 +22,14 @@ export default function Statement() {
                 revolutionize your investment experience.
               </p>
               <div className="flex items-center justify-center ">
-                <a
-                  href="/signup"
-                  className="mt-5 rounded-md border border-transparent bg-indigo-600 py-3 px-6 font-medium text-white hover:bg-blue-700"
-                >
-                  Get Started <span aria-hidden="true">&rarr;</span>
-                </a>
+                {!token && (
+                  <a
+                    href="/signup"
+                    className="mt-5 rounded-md border border-transparent bg-indigo-600 py-3 px-6 font-medium text-white hover:bg-blue-700"
+                  >
+                    Get Started <span aria-hidden="true">&rarr;</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>

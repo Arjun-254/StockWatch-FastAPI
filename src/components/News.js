@@ -27,10 +27,10 @@ export default function News() {
         //   .split("T")[0];
         //https://newsapi.org/v2/everything?q=indian%20stock%20market%20economy&from=${formattedLastMonthDate}&to=${formattedCurrentDate}&sortBy=publishedAt&language=en&apiKey=baea8a5de1a74cfc93627e7a4ca3a4d4
         const response = await fetch(
-          `https://newsdata.io/api/1/news?apikey=pub_37443c86e03e4a7e9543ef652dad23b0b89ca&q=indian%20stock%20market%20economy`
+          `https://newsdata.io/api/1/news?apikey=pub_37443c86e03e4a7e9543ef652dad23b0b89ca&q=indian%20stock%20market%20nifty`
         );
         const data = await response.json();
-        console.log(data.results);
+        //console.log(data.results);
         const sortedArticles = data.results;
 
         setArticles(sortedArticles);

@@ -10,6 +10,8 @@
     "aos": "^2.3.4",
     "axios": "^1.4.0",
     "framer-motion": "^10.13.0",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
