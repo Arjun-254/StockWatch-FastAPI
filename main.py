@@ -205,14 +205,15 @@ async def getLists(
 def stock_data(request: TickerRequest):
     ticker = request.ticker
     stock = yf.Ticker(ticker)
-    stock_prices = stock.history(period='1d', interval='1m')['Close']
+    stock_prices = stock.history(period='1d', interval='2m')['Close']
+    prev_close = stock.history(period='5d')['Close'][-2]
 
     # Convert the DataFrame to an array of objects with 'date' and 'closePrice' properties
     formatted_prices = [
         {"date": str(date), "closePrice": stock_prices[date]} for date in stock_prices.index
     ]
 
-    return formatted_prices
+    return {"stockPrices": formatted_prices, "prevClose": prev_close}
 
 
 stocks = [
