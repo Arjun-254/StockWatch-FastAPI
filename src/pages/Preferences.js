@@ -215,7 +215,7 @@ export default function PreferencesForm() {
         <div className="mx-auto w-full px-10 lg:px-14">
           <div className="mx-auto grid max-w-2xl pt-16 grid-cols-1 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
             <div className="lg:p-12 lg:pt-4">
-              <div className="mx-auto lg:max-w-lg justify-between text-center flex flex-col">
+              <div className="m lg:max-w-lg justify-between text-center flex flex-col">
                 <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-2xl pt-10 pb-2">
                   Select Your Portfolio Holdings
                 </h1>
@@ -266,14 +266,14 @@ export default function PreferencesForm() {
                     }}
                   />
                 </div>
+                <button
+                  type="submit"
+                  className="mt-10 bg-blue-600 text-white px-10 py-2 rounded hover:bg-blue-800 "
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
               </div>
-              <button
-                type="submit"
-                className="mt-10 bg-blue-600 text-white px-10 py-2 rounded hover:bg-blue-800 "
-                onClick={handleSubmit}
-              >
-                Submit
-              </button>
             </div>
             <Phone />
           </div>
