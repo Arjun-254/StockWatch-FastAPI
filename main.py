@@ -118,6 +118,13 @@ async def get_current_active_user(
     return current_user
 
 
+def percentageChange(ticker):
+    stock = yf.Ticker(ticker)
+    stock_prices = stock.history(period='5d')['Close']
+    change = stock_prices[-1]-stock_prices[-2]
+    return round((change / stock_prices[-2]) * 100, 2)
+
+
 @app.get("/")
 def read_root():
     print(db)
@@ -198,7 +205,7 @@ async def getLists(
 def stock_data(request: TickerRequest):
     ticker = request.ticker
     stock = yf.Ticker(ticker)
-    stock_prices = stock.history(period='1mo')['Close']
+    stock_prices = stock.history(period='1d', interval='1m')['Close']
 
     # Convert the DataFrame to an array of objects with 'date' and 'closePrice' properties
     formatted_prices = [
@@ -206,3 +213,85 @@ def stock_data(request: TickerRequest):
     ]
 
     return formatted_prices
+
+
+stocks = [
+    'ADANIENT.NS',
+    'ADANIPORTS.NS',
+    'APOLLOHOSP.NS',
+    'ASIANPAINT.NS',
+    'AXISBANK.NS',
+    'BAJAJ-AUTO.NS',
+    'BAJFINANCE.NS',
+    'BAJAJFINSV.NS',
+    'BPCL.NS',
+    'BHARTIARTL.NS',
+    'BRITANNIA.NS',
+    'CIPLA.NS',
+    'COALINDIA.NS',
+    'DIVISLAB.NS',
+    'DRREDDY.NS',
+    'EICHERMOT.NS',
+    'GRASIM.NS',
+    'HCLTECH.NS',
+    'HDFCBANK.NS',
+    'HDFCLIFE.NS',
+    'HEROMOTOCO.NS',
+    'HINDALCO.NS',
+    'HINDUNILVR.NS',
+    'ICICIBANK.NS',
+    'ITC.NS',
+    'INDUSINDBK.NS',
+    'INFY.NS',
+    'JSWSTEEL.NS',
+    'KOTAKBANK.NS',
+    'LTIM.NS',
+    'LT.NS',
+    'M&M.NS',
+    'MARUTI.NS',
+    'NTPC.NS',
+    'NESTLEIND.NS',
+    'ONGC.NS',
+    'POWERGRID.NS',
+    'RELIANCE.NS',
+    'SBILIFE.NS',
+    'SBIN.NS',
+    'SUNPHARMA.NS',
+    'TCS.NS',
+    'TATACONSUM.NS',
+    'TATAMOTORS.NS',
+    'TATASTEEL.NS',
+    'TECHM.NS',
+    'TITAN.NS',
+    'UPL.NS',
+    'ULTRACEMCO.NS',
+    'WIPRO.NS'
+]
+
+
+@app.post("/topgainers")
+def topgainers():
+    PercentagesList = []
+    for ticker in stocks:
+        change_percentage = percentageChange(ticker)
+        PercentagesList.append(
+            {"name": ticker, "percentage": change_percentage})
+
+    PercentagesList = sorted(
+        PercentagesList, key=lambda item: item["percentage"], reverse=True)[:10]
+
+    return PercentagesList
+
+
+@app.post("/toplosers")
+def toplosers():
+    PercentagesList = []
+    for ticker in stocks:
+        change_percentage = percentageChange(ticker)
+        PercentagesList.append(
+            {"name": ticker, "percentage": change_percentage})
+
+    PercentagesList = sorted(
+        PercentagesList, key=lambda item: item["percentage"])[:10]
+
+    return PercentagesList
