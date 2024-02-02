@@ -49,7 +49,7 @@ export default function StockCarousel({ color }) {
   }, []);
 
   return (
-    <div className="flex flex-col sm:flex-col md:flex-row justify-cnter w-full overflow-x-auto overflow-y-hidden bg-gray-800 p-2 px-1 rounded-lg">
+    <div className="flex flex-col sm:flex-col md:flex-row justify-center w-full overflow-x-auto overflow-y-hidden bg-gray-800 p-2 px-1 rounded-lg">
       <Swiper
         spaceBetween={20}
         slidesPerView={2}
@@ -68,7 +68,7 @@ export default function StockCarousel({ color }) {
         {gainers.map((stock, index) => (
           <SwiperSlide key={index}>
             <Tilt>
-              <li className="flex flex-col justify-center items-center gap-x-6 py-2 px-6 rounded-md bg-gray-700 mx-1">
+              <li className="flex flex-col justify-center items-center py-2 rounded-md bg-gray-700 mx-1">
                 <div className="flex gap-x-4">
                   {loading ? (
                     <div className="animate-pulse">

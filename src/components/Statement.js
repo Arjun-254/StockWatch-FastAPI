@@ -15,7 +15,7 @@ export default function Statement() {
               <p className="mt-2 text-4xl sm:text-4xl md:text-6xl font-bold flex justify-center items-left tracking-tight bg-gradient-to-r from-blue-400 to-purple-700 bg-clip-text text-transparent ">
                 StockWatch
               </p>
-              <p className="mt-4 text-md sm:text-md md:text-2xl text-gray-300">
+              <p className="mt-4 text-md sm:text-md md:text-2xl text-gray-300 text-center">
                 Are you looking to elevate your investment game and make more
                 informed decisions in the stock market? Welcome to StockWatch,
                 your all-in-one stock recommendation system designed to

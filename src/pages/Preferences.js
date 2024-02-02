@@ -146,7 +146,7 @@ export default function PreferencesForm() {
             },
           }
         );
-        console.log(res.data);
+        //console.log(res.data);
         setWatchlist(res.data.WatchList);
         setStockList(res.data.StockList);
         setRisk(res.data.Risk);
@@ -161,13 +161,13 @@ export default function PreferencesForm() {
   const handleStockChoose = (selectedOptions) => {
     const selectedStocks = selectedOptions.map((option) => option.value);
     setStockList(selectedStocks);
-    console.log(selectedStocks);
+    //console.log(selectedStocks);
   };
 
   const handleWatchlistChoose = (selectedOptions) => {
     const selectedWatchlist = selectedOptions.map((option) => option.value);
     setWatchlist(selectedWatchlist);
-    console.log(selectedWatchlist);
+    //console.log(selectedWatchlist);
   };
 
   const handleRiskChoose = (selectedOptions) => {
@@ -180,7 +180,7 @@ export default function PreferencesForm() {
     e.preventDefault();
     //console.log("Watchlist:", watchlist);
     //console.log("Stocklist:", stockList);
-    console.log("Risk:", risk);
+    //console.log("Risk:", risk);
 
     // Perform the post request to the server with the selected data
     try {
@@ -198,7 +198,7 @@ export default function PreferencesForm() {
           },
         }
       );
-      console.log(res.data);
+      //console.log(res.data);
       // Handle the response from the server as needed
     } catch (error) {
       console.error(error);

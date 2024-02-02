@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import ReCAPTCHA from "react-google-recaptcha";
 import Webcam from "react-webcam";
 import axios from "axios";
-import { calculateNewValue } from "@testing-library/user-event/dist/utils";
+import { InfinitySpin } from "react-loader-spinner";
 // import MyContext from '../components/MyContext'
 
 const videoConstraints = {
@@ -21,7 +21,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let flag = false;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [file, setFile] = useState("");
   const webcamRef = React.useRef(null);
@@ -36,34 +37,42 @@ const Login = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(password);
-    const res = await axios.post(
-      "https://stockwatch-backend-p3zq.onrender.com/login",
-      {
-        username: email,
-        password: password,
-      },
-      {
-        headers: {
-          "Content-Type": `application/x-www-form-urlencoded`,
+    if (!email || !password) {
+      setError("Please fill in all the fields.");
+      return;
+    }
+    try {
+      setLoading(true);
+      e.preventDefault();
+      //console.log(password);
+      const res = await axios.post(
+        "https://stockwatch-backend-p3zq.onrender.com/login",
+        {
+          username: email,
+          password: password,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": `application/x-www-form-urlencoded`,
+          },
+        }
+      );
 
-    if (res.status === 200) {
-      //console.log(res.data.access_token);
-      flag = true;
-      localStorage.setItem("flag", flag);
-      const tok = res.data.access_token;
-      localStorage.setItem("jwt", tok);
-      const firstLogin = res.data.first_login;
-      if (firstLogin == true) {
-        navigate("/preferences");
-      } else {
-        navigate("/dashboard");
+      if (res.status === 200) {
+        //console.log(res.data.access_token);
+        const tok = res.data.access_token;
+        localStorage.setItem("jwt", tok);
+        const firstLogin = res.data.first_login;
+        if (firstLogin == true) {
+          navigate("/preferences");
+        } else {
+          navigate("/dashboard");
+        }
       }
-    } else {
-      console.log("wrong pass");
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.detail);
+      setLoading(false);
     }
   };
 
@@ -170,23 +179,27 @@ const Login = () => {
                           </div>*/}
                     {/* <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                          <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} /> */}
-                    <div className="flex justify-center items-center mx-auto col-md-6">
+                    <div className="flex flex-col justify-center items-center mx-auto col-md-6">
                       <ReCAPTCHA sitekey={key} onChange={onChange} />
+                      {error && <p className="my-2 text-red-500">{error}</p>}
                     </div>
                   </form>
                 </div>
               </div>
             </div>
             <div className="flex justify-center items-center mt-4">
-              {captchaIsDone && (
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-800 "
-                  onClick={handleSubmit}
-                >
-                  Login
-                </button>
-              )}
+              {captchaIsDone &&
+                (loading ? (
+                  <InfinitySpin width="200" color="white" />
+                ) : (
+                  <button
+                    type="submit"
+                    className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-800"
+                    onClick={handleSubmit}
+                  >
+                    Login
+                  </button>
+                ))}
             </div>
           </form>
           <div className="flex justify-center items-center">

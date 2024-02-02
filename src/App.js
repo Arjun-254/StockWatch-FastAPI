@@ -17,7 +17,7 @@ const PrivateWrapper = ({ element }) => {
 
 function App() {
   return (
-    <div className="App">
+    <div className="App ">
       <BrowserRouter>
         <Navbar />
         <Routes>

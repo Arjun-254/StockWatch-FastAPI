@@ -10,7 +10,13 @@ SwiperCore.use([Autoplay]);
 SwiperCore.use([Navigation]);
 
 export default function News() {
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState([
+    { title: "News 1", image_url: "", link: "#" },
+    { title: "News 2", image_url: "", link: "#" },
+    { title: "News 3", image_url: "", link: "#" },
+    { title: "News 4", image_url: "", link: "#" },
+    { title: "News 5", image_url: "", link: "#" },
+  ]);
   const [placeholderImageUrl, setPlaceholderImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {

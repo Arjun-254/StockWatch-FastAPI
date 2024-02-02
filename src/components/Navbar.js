@@ -37,14 +37,17 @@ const Navbar = () => {
     <div className="flex flex-row static">
       <header className="absolute inset-x-0 top-0 z-50 bg-gradient-to-r from-blue-600 to-blue-800">
         <nav
-          className="flex items-center justify-between p-2 mb-1 lg:px-8"
+          className="flex items-center justify-between p-2 mb-1 lg:px-8 h-16"
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
             <a className="p-2 bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 rounded-lg">
-              <p className="text-md md:text-xl font-bold flex justify-center items-left tracking-tight bg-gradient-to-r from-blue-400 to-purple-700 bg-clip-text text-transparent ">
+              <a
+                className="text-md md:text-xl font-bold flex justify-center items-left tracking-tight bg-gradient-to-r from-blue-400 to-purple-700 bg-clip-text text-transparent "
+                onClick={() => navigate("/")}
+              >
                 StockWatch
-              </p>
+              </a>
             </a>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">

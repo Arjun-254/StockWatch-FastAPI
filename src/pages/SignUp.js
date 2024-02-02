@@ -4,11 +4,10 @@ import { useEffect, useState, useRef } from "react";
 import { Typewriter } from "react-simple-typewriter";
 import Navbar from "../components/Navbar";
 import ReCAPTCHA from "react-google-recaptcha";
-import Webcam from "react-webcam";
 import axios from "axios";
-import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { InfinitySpin } from "react-loader-spinner";
 
 const videoConstraints = {
   width: 200,
@@ -23,13 +22,14 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let flag = false;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [file, setFile] = useState("");
   const webcamRef = React.useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChooseGender = (selectedOption) => {
     setGender(selectedOption.value);
@@ -65,28 +65,36 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(password);
-    const res = await axios.post(
-      "https://stockwatch-backend-p3zq.onrender.com/signup",
-      {
-        username: email,
-        password: password,
-        first_name: firstName, // Include first name in the request payload
-        last_name: lastName, // Include last name in the request payload
-        age: age,
-        gender: gender,
+    if (!email || !password || !firstName || !lastName || !age || !gender) {
+      setLoading(false);
+      setError("Please fill in all the fields.");
+      return;
+    }
+    try {
+      setLoading(true);
+      e.preventDefault();
+      //console.log(password);
+
+      const res = await axios.post(
+        "https://stockwatch-backend-p3zq.onrender.com/signup",
+        {
+          username: email,
+          password: password,
+          first_name: firstName,
+          last_name: lastName,
+          age: age,
+          gender: gender,
+        }
+      );
+
+      if (res.status === 200) {
+        navigate("/login");
+      } else {
       }
-    );
-
-    console.log(res);
-
-    if (res.status === 200) {
-      flag = true;
-      localStorage.setItem("flag", flag);
-      console.log(flag);
-      navigate("/login");
-    } else {
-      console.log("wrong pass");
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.detail);
+      setLoading(false);
     }
   };
 
@@ -107,7 +115,7 @@ const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
   const key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
   const [captchaIsDone, setCaptchaDone] = useState(false);
   function onChange() {
-    console.log("changed");
+    //console.log("changed");
     setCaptchaDone(true);
   }
 
@@ -278,23 +286,27 @@ const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
                           </div>*/}
                     {/* <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                          <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} /> */}
-                    <div className="flex justify-center items-center mx-auto col-md-6">
+                    <div className="flex flex-col justify-center items-center mx-auto col-md-6">
                       <ReCAPTCHA sitekey={key} onChange={onChange} />
+                      {error && <p className="my-2 text-red-500">{error}</p>}
                     </div>
                   </form>
                 </div>
               </div>
             </div>
             <div className="flex justify-center items-center mt-4">
-              {captchaIsDone && (
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-800 "
-                  onClick={handleSubmit}
-                >
-                  Sign up
-                </button>
-              )}
+              {captchaIsDone &&
+                (loading ? (
+                  <InfinitySpin width="200" color="white" />
+                ) : (
+                  <button
+                    type="submit"
+                    className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-800"
+                    onClick={handleSubmit}
+                  >
+                    Sign Up
+                  </button>
+                ))}
             </div>
           </form>
           <div className="flex justify-center items-center">

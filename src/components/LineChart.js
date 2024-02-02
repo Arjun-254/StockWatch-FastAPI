@@ -110,7 +110,7 @@ export default function LineChart({ symbol }) {
   return (
     <>
       {loading ? (
-        <div className="bg-gray-800 px-3 py-2 mx-2 rounded-lg flex flex-col w-full">
+        <div className="bg-gray-800 px-3 py-2 mx-2 rounded-lg flex flex-col w-full xl:w-1/2">
           <div className="flex flex-row justify-between items-center pb-1">
             {symbol === 1 && (
               <h1 className="text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-2xl">
@@ -122,19 +122,20 @@ export default function LineChart({ symbol }) {
                 Sensex (^BSESN)
               </h1>
             )}
-            <InfinitySpin width="200" color="blue" />
+            <InfinitySpin width="100" color="white" />
           </div>
+          <Line data={chartData} options={chartOptions} />
         </div>
       ) : (
-        <div className="bg-gray-800 px-3 py-2 mx-2 rounded-lg flex flex-col w-full">
+        <div className="bg-gray-800 px-3 py-2 mx-2 rounded-lg flex flex-col w-full xl:w-1/2">
           <div className="flex flex-row justify-between items-center pb-1">
             {symbol === 1 && (
-              <h1 className="text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-2xl">
+              <h1 className="text-md md:text-2xl font-extrabold mr-2 tracking-tight text-white sm:text-2xl">
                 Nifty-50
               </h1>
             )}
             {symbol === 2 && (
-              <h1 className="text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-2xl">
+              <h1 className="text-md md:text-2xl mr-2 font-extrabold tracking-tight text-white sm:text-2xl">
                 Sensex
               </h1>
             )}

@@ -16,8 +16,8 @@ export const Footer = () => {
   return (
     <div
       className="bg-gradient-to-r from-blue-600 to-blue-800 text-white bottom-0"
-      // data-aos="slide-up"
-      // data-aos-mirror="true"
+      data-aos="slide-up"
+      data-aos-mirror="true"
     >
       <div className="container mx-auto py-3">
         <div className="flex justify-center items-center">

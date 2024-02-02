@@ -7,7 +7,7 @@ import { Footer } from "../components/Footer";
 
 export default function Landing() {
   return (
-    <>
+    <div className="bg-gradient-to-r from-gray-900 via-black to-gray-900">
       <div className="flex flex-col bg-gradient-to-r from-gray-900 via-black to-gray-900 bg-full h-max p-10">
         <Navbar />
         <div className="flex-grow">
@@ -17,6 +17,6 @@ export default function Landing() {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
