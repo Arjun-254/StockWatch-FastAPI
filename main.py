@@ -4,6 +4,7 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from pymongo.errors import DuplicateKeyError
+from concurrent.futures import ThreadPoolExecutor
 
 
 from passlib.context import CryptContext
@@ -118,13 +119,6 @@ async def get_current_active_user(
     return current_user
 
 
-def percentageChange(ticker):
-    stock = yf.Ticker(ticker)
-    stock_prices = stock.history(period='5d')['Close']
-    change = stock_prices[-1]-stock_prices[-2]
-    return round((change / stock_prices[-2]) * 100, 2)
-
-
 @app.get("/")
 def read_root():
     print(db)
@@ -138,7 +132,7 @@ def signup(request: User):
     if existing_user:
         raise HTTPException(
             status_code=400,
-            detail="Username already registered",
+            detail="Email ID has already registered",
         )
 
     hashed_pass = get_password_hash(request.password)
@@ -163,10 +157,10 @@ def login(request: OAuth2PasswordRequestForm = Depends()):
     user = db.find_one({"username": request.username})
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'No user found with this {request.username} username')
+                            detail=f'No user found with this Email ID')
     if not verify_password(request.password, user["hashed_password"]):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Wrong Username or password')
+                            detail=f'Wrong Email ID or password')
     access_token = create_access_token(data={"sub": user["username"]})
     return {"access_token": access_token, "token_type": "bearer", "first_login": user["first_login"]}
 
@@ -270,29 +264,32 @@ stocks = [
 ]
 
 
+def percentageChange(ticker):
+    stock = yf.Ticker(ticker)
+    stock_prices = stock.history(period='5d')['Close']
+    change = stock_prices[-1] - stock_prices[-2]
+    return round((change / stock_prices[-2]) * 100, 2)
+
+
+def process_ticker(ticker):
+    change_percentage = percentageChange(ticker)
+    return {"name": ticker, "percentage": change_percentage}
+
+
 @app.post("/topgainers")
 def topgainers():
-    PercentagesList = []
-    for ticker in stocks:
-        change_percentage = percentageChange(ticker)
-        PercentagesList.append(
-            {"name": ticker, "percentage": change_percentage})
+    with ThreadPoolExecutor() as executor:
+        results = list(executor.map(process_ticker, stocks))
 
-    PercentagesList = sorted(
-        PercentagesList, key=lambda item: item["percentage"], reverse=True)[:10]
-
-    return PercentagesList
+    results = sorted(
+        results, key=lambda item: item["percentage"], reverse=True)[:10]
+    return results
 
 
 @app.post("/toplosers")
 def toplosers():
-    PercentagesList = []
-    for ticker in stocks:
-        change_percentage = percentageChange(ticker)
-        PercentagesList.append(
-            {"name": ticker, "percentage": change_percentage})
+    with ThreadPoolExecutor() as executor:
+        results = list(executor.map(process_ticker, stocks))
 
-    PercentagesList = sorted(
-        PercentagesList, key=lambda item: item["percentage"])[:10]
-
-    return PercentagesList
+    results = sorted(results, key=lambda item: item["percentage"])[:10]
+    return results
