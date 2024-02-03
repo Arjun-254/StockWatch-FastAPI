@@ -177,45 +177,46 @@ export default function Stock({ ticker }) {
   const colour = percentageChange >= 0 ? "bg-green-600" : "bg-red-600";
   const stockLabel = stockOptionsDict[ticker];
   return (
-    <div>
-      <Tilt tiltMaxAngleX={4} tiltMaxAngleY={4}>
-        <li className="flex justify-between p-3 rounded-lg bg-gray-700 mb-1">
-          <div className="flex gap-x-4">
-            {loading ? (
-              <div className="animate-pulse">
-                <div className="bg-gray-400 h-4 w-64 mb-2 rounded-md"></div>
-                <div className="bg-gray-500 h-4 w-36 rounded-md"></div>
-              </div>
-            ) : (
-              <div className=" flex flex-col items-start">
-                <p className="text-sm font-bold leading-5 text-white">
-                  {ticker}
-                </p>
-                <p className="mt-1 truncate text-[10px] leading-5 w-1/2 text-slate-400 overflow-auto">
-                  {stockLabel}
-                </p>
-              </div>
-            )}
-          </div>
-          {!loading && (
-            <div className="flex flex-row">
-              <div className="hidden xl:block xl:w-32 xl:h-auto w-36 h-20 text-right mr-4 ">
-                <Line data={chartData} options={chartOptions} />
-              </div>
-              <div className="flex flex-col items-end">
-                <p className="text-sm font-extrabold leading-6 text-white">
-                  {lastClosePrice}
-                </p>
-                <p
-                  className={`mt-1 text-sm font-bold leading-5 ${colour} py-1 px-2 rounded-md text-white`}
-                >
-                  {percentageChange}%
-                </p>
-              </div>
+    <Tilt tiltMaxAngleX={4} tiltMaxAngleY={4} className="flex justify-center">
+      <li className="flex items-center justify-between p-3 rounded-lg bg-gray-700 mb-1 w-full">
+        <div className="flex items-center w-1/4">
+          {" "}
+          {loading ? (
+            <div className="animate-pulse">
+              <div className="bg-gray-400 h-4 w-16 mb-2 rounded-md"></div>
+              <div className="bg-gray-500 h-4 w-16 rounded-md"></div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-start">
+              <p className="text-xs md:text-sm font-bold leading-5 text-white">
+                {ticker}
+              </p>
+              <p className="mt-1 truncate text-[8px] md:text-[10px] leading-5 w-1/2 text-slate-400 overflow-auto">
+                {stockLabel}
+              </p>
             </div>
           )}
-        </li>
-      </Tilt>
-    </div>
+        </div>
+        {!loading && (
+          <div className="flex justify-center items-center flex-shrink-0 w-1/4">
+            <div className="block w-full h-auto md:w-36 md:h-20 text-right">
+              <Line data={chartData} options={chartOptions} />
+            </div>
+          </div>
+        )}
+        {!loading && (
+          <div className="flex flex-col items-end w-1/4">
+            <p className="text-sm font-extrabold leading-6 text-white">
+              {lastClosePrice}
+            </p>
+            <p
+              className={`mt-1 text-sm font-bold leading-5 ${colour} py-1 px-2 rounded-md text-white`}
+            >
+              {percentageChange}%
+            </p>
+          </div>
+        )}
+      </li>
+    </Tilt>
   );
 }

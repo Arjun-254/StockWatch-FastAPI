@@ -46,12 +46,12 @@ export default function StockCarousel2({ color }) {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-row justify-centre w-full overflow-x-auto overflow-y-hidden bg-gray-800 p-2 px-1 rounded-lg">
+    <div className="flex flex-row justify-centre w-full overflow-x-auto overflow-y-hidden bg-gray-800 p-2 px-1 rounded-lg ">
       <Swiper
         spaceBetween={20}
         slidesPerView={2}
         autoplay={{
-          delay: 5000,
+          delay: 15000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay, Navigation]}

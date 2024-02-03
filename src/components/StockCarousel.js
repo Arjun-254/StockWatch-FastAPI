@@ -54,7 +54,7 @@ export default function StockCarousel({ color }) {
         spaceBetween={20}
         slidesPerView={2}
         autoplay={{
-          delay: 5000,
+          delay: 15000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay, Navigation]}

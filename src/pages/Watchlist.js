@@ -90,8 +90,8 @@ export default function Watchlist() {
           {/* Button to toggle between watchlist and portfolio list */}
         </div>
 
-        <div className="flex flex-col mt-0 min-h-max xl:w-2/3 xl:px-1 justify-start items-center xl:ml-0 ">
-          <div className="flex flex-col xl:flex-row gap-y-6 xl:gap-y-0 w-full xl:w-1/2 items-center justify-center ml-0 xl:ml-2 ">
+        <div className="flex flex-col mt-0 min-h-max xl:w-2/3 xl:px-1 justify-start items-center xl:mx-4 ">
+          <div className="flex flex-col xl:flex-row gap-y-6 xl:gap-y-0 w-full xl:w-1/2 items-center justify-center ml-0  ">
             <div className="flex flex-col  mt-4 w-11/12 xl:w-full mr-0 xl:mr-2 ">
               <p className="mb-2 text-4xl font-extrabold text-white text-center">
                 Top Gainers
