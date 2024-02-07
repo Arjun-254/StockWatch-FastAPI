@@ -14,6 +14,14 @@ export default function LineChart({ symbol }) {
         borderColor: "white",
         tension: 0.4,
       },
+      {
+        label: "Starting Price",
+        data: [],
+        fill: false,
+        borderColor: "white",
+        borderDash: [5, 5],
+        tension: 0,
+      },
     ],
   });
 
@@ -34,14 +42,12 @@ export default function LineChart({ symbol }) {
           },
           {
             headers: {
-              "Content-Type": `application/json`,
+              "Content-Type": "application/json",
             },
           }
         );
-        //console.log(response);
-        const data = response.data.stockPrices;
-        //console.log(data);
 
+        const data = response.data.stockPrices;
         const sortedData = data.sort(
           (a, b) => new Date(a.date) - new Date(b.date)
         );
@@ -52,19 +58,17 @@ export default function LineChart({ symbol }) {
           setLastClosePrice(lastClose.toFixed(2).toLocaleString());
           setSecondLastClosePrice(secondLastClose.toFixed(2).toLocaleString());
 
-          // Calculate the percentage change
           const change = lastClose - secondLastClose;
           const percentageChange = ((change / secondLastClose) * 100).toFixed(
             2
           );
-
           setPercentageChange(percentageChange);
+
           const lineColor = percentageChange >= 0 ? "green" : "red";
 
           const chartDataUpdated = {
             labels: sortedData.map((item) => {
               const date = new Date(item.date);
-              // Format date and time
               const formattedDateTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
               return formattedDateTime;
             }),
@@ -73,7 +77,14 @@ export default function LineChart({ symbol }) {
                 ...chartData.datasets[0],
                 data: sortedData.map((item) => item.closePrice),
                 borderColor: lineColor,
-                pointRadius: 2,
+                pointRadius: 1.5,
+              },
+              {
+                ...chartData.datasets[1],
+                data: Array(sortedData.length).fill(secondLastClose),
+                pointRadius: 0,
+                borderWidth: 2, // Set the desired thickness
+                borderColor: "lightgray", // Set the desired color
               },
             ],
           };
@@ -91,22 +102,26 @@ export default function LineChart({ symbol }) {
   }, [symbol]);
 
   const chartOptions = {
+    interaction: {
+      intersect: false,
+    },
     scales: {
       x: {
-        display: false, // Show x-axis scale and labels
+        display: false,
       },
       y: {
-        display: true, // Show y-axis scale and labels
+        display: true,
       },
     },
     plugins: {
       legend: {
-        display: false, // Hide legend
+        display: false,
       },
     },
   };
 
   const colour = percentageChange >= 0 ? "bg-green-600" : "bg-red-600";
+
   return (
     <>
       {loading ? (
@@ -145,7 +160,7 @@ export default function LineChart({ symbol }) {
               {percentageChange}%
             </p>
             <p
-              className={`ml-2 text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-xl  p-1 rounded-lg`}
+              className={`ml-2 text-lg md:text-3xl font-extrabold tracking-tight text-white sm:text-xl p-1 rounded-lg`}
             >
               {lastClosePrice}
             </p>

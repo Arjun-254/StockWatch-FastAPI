@@ -128,15 +128,24 @@ export default function Stock({ ticker }) {
           const chartDataUpdated = {
             labels: sortedData.map((item) => {
               const date = new Date(item.date);
-              // Format date and time
               const formattedDateTime = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
               return formattedDateTime;
             }),
             datasets: [
               {
                 ...chartData.datasets[0],
-                data: sortedData.map((item) => item.closePrice), // Using 'closePrice' as data
-                borderColor: lineColor, // Set graph color based on percentage change
+                data: sortedData.map((item) => item.closePrice),
+                borderColor: lineColor,
+                borderWidth: 1.5,
+                pointRadius: 0,
+              },
+              {
+                ...chartData.datasets[1],
+                data: Array(sortedData.length).fill(sortedData[0].closePrice),
+                borderWidth: 1,
+                borderColor: "lightgray",
+                borderDash: [5, 5], // Optional: Set a border dash pattern for a dotted line
+                pointRadius: 0, // Set pointRadius to 0 to hide points
               },
             ],
           };
@@ -154,6 +163,9 @@ export default function Stock({ ticker }) {
   }, [ticker]);
 
   const chartOptions = {
+    interaction: {
+      intersect: false,
+    },
     scales: {
       x: {
         display: false, // Hide x-axis scale and labels
