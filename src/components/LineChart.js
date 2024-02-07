@@ -103,6 +103,7 @@ export default function LineChart({ symbol }) {
 
   const chartOptions = {
     interaction: {
+      mode: "index",
       intersect: false,
     },
     scales: {

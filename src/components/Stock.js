@@ -15,6 +15,14 @@ export default function Stock({ ticker }) {
         borderColor: "white",
         tension: 0.4,
       },
+      {
+        label: "Starting Price",
+        data: [],
+        fill: false,
+        borderColor: "white",
+        borderDash: [5, 5],
+        tension: 0,
+      },
     ],
   });
 
