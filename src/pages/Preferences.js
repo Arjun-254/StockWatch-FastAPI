@@ -136,25 +136,44 @@ export default function PreferencesForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.post(
-          "https://stockwatch-backend-p3zq.onrender.com/getlists",
-          {},
-          {
-            headers: {
-              token: `${localStorage.getItem("jwt")}`,
-              "Content-Type": `application/json`,
-            },
-          }
-        );
-        //console.log(res.data);
-        setWatchlist(res.data.WatchList);
-        setStockList(res.data.StockList);
-        setRisk(res.data.Risk);
+        // Check local storage first
+        const cachedData = localStorage.getItem("userLists");
+
+        if (cachedData) {
+          // If data is in local storage, use it
+          const parsedData = JSON.parse(cachedData);
+          setWatchlist(parsedData.WatchList);
+          setStockList(parsedData.StockList);
+          setRisk(parsedData.Risk);
+        } else {
+          // If not in local storage, make API call
+          const res = await axios.post(
+            "https://stockwatch-backend-p3zq.onrender.com/getlists",
+            {},
+            {
+              headers: {
+                token: `${localStorage.getItem("jwt")}`,
+                "Content-Type": `application/json`,
+              },
+            }
+          );
+
+          // Update state with API data
+          setWatchlist(res.data.WatchList);
+          setStockList(res.data.StockList);
+          setRisk(res.data.Risk);
+
+          // Update local storage
+          localStorage.setItem("userLists", JSON.stringify(res.data));
+        }
+
+        // Force rerender
         setForceRerender((prev) => !prev);
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -181,8 +200,8 @@ export default function PreferencesForm() {
     //console.log("Watchlist:", watchlist);
     //console.log("Stocklist:", stockList);
     //console.log("Risk:", risk);
-
     // Perform the post request to the server with the selected data
+    localStorage.removeItem("userLists");
     try {
       const res = await axios.post(
         "https://stockwatch-backend-p3zq.onrender.com/updatelists",

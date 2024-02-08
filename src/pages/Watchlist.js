@@ -22,19 +22,29 @@ export default function Watchlist() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.post(
-          "https://stockwatch-backend-p3zq.onrender.com/getlists",
-          {},
-          {
-            headers: {
-              token: `${localStorage.getItem("jwt")}`,
-              "Content-Type": `application/json`,
-            },
-          }
-        );
-        //console.log(res);
-        setWatchlist(res.data.WatchList);
-        setPortfolio(res.data.StockList);
+        const cachedData = localStorage.getItem("userLists");
+
+        if (cachedData) {
+          //console.log("No dashboard list call");
+          const parsedData = JSON.parse(cachedData);
+          setWatchlist(parsedData.WatchList);
+          setPortfolio(parsedData.StockList);
+        } else {
+          const res = await axios.post(
+            "https://stockwatch-backend-p3zq.onrender.com/getlists",
+            {},
+            {
+              headers: {
+                token: `${localStorage.getItem("jwt")}`,
+                "Content-Type": `application/json`,
+              },
+            }
+          );
+          //console.log(res);
+          setWatchlist(res.data.WatchList);
+          setPortfolio(res.data.StockList);
+          localStorage.setItem("userLists", JSON.stringify(res.data));
+        }
         // Handle the response from the server as needed
       } catch (error) {
         console.error(error);
