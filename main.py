@@ -1,11 +1,14 @@
 from fastapi import Depends, FastAPI, HTTPException, status, Header, Body
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from typing import Annotated
 from pymongo.errors import DuplicateKeyError
-from concurrent.futures import ThreadPoolExecutor
 
+from concurrent.futures import ThreadPoolExecutor
+import requests
+from GoogleNews import GoogleNews
+from collections import Counter
 
 from passlib.context import CryptContext
 from fastapi.middleware.cors import CORSMiddleware
@@ -196,7 +199,7 @@ async def getLists(
 
 
 @app.post("/yfin")
-def stock_data(request: TickerRequest):
+async def stock_data(request: TickerRequest):
     ticker = request.ticker
     stock = yf.Ticker(ticker)
     stock_prices = stock.history(period='1d', interval='2m')['Close']
@@ -293,3 +296,56 @@ def toplosers():
 
     results = sorted(results, key=lambda item: item["percentage"])[:10]
     return results
+
+
+API_URL = "https://api-inference.huggingface.co/models/mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
+headers = {"Authorization": "Bearer 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"}
+
+# To scrape top 10 news articles for the stock
+
+
+def get_headlines(stock_name):
+
+    stock_name = stock_name[:-3]  # To remove .NS when passed from the backend
+    googlenews = GoogleNews(lang='en', region='IN', period='7d')
+    googlenews.get_news(stock_name+' stock news')
+    headlines = googlenews.get_texts()
+
+    return headlines[:10]
+
+# To get sentiment of the top 10 news articles for the stock
+
+
+def get_sentiment_label(text):
+    payload = {"inputs": text, "options": {"wait_for_model": True}, }
+    response = requests.post(API_URL, headers=headers, json=payload)
+    result = response.json()
+    # Extract sentiment label
+    sentiment_label = result[0][0]['label']  # [0][0]['label']
+
+    return {"headline": text, "sentiment": sentiment_label}
+
+
+@app.post('/news')
+async def scrape_and_analyze_sentiment(request: TickerRequest):
+    headlines = get_headlines(request.ticker)
+
+    if not headlines:
+        raise HTTPException(
+            status_code=404, detail="No headlines found for the provided stock name")
+
+    with ThreadPoolExecutor() as executor:
+        results = list(executor.map(get_sentiment_label, headlines))
+
+    # Count the occurrences of each sentiment label
+    sentiment_counts = Counter(result["sentiment"] for result in results)
+
+    # Prepare the final result with counts
+    final_result = {
+        "positive_count": sentiment_counts.get("positive", 0),
+        "negative_count": sentiment_counts.get("negative", 0),
+        "neutral_count": sentiment_counts.get("neutral", 0),
+        "articles": results
+    }
+
+    return final_result
