@@ -1,5 +1,8 @@
-from fastapi import Depends, FastAPI, HTTPException, status, Header, Body
+from fastapi import Depends, FastAPI, HTTPException, status, Header, Body,File
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.responses import FileResponse
+import os
+
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from typing import Annotated
@@ -123,9 +126,18 @@ async def get_current_active_user(
 
 
 @app.get("/")
-def read_root():
-    print(db)
-    return {"Hello": "World"}
+async def download_file():
+    file_path = 'test.py'
+    # Specify the filename for the downloaded file
+    filename = 'test.py'
+    
+    # Check if file exists
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    # Return the file as a response
+    return FileResponse(file_path, filename=filename)
+
 
 
 @app.post('/signup')
