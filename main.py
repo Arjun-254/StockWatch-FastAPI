@@ -126,17 +126,8 @@ async def get_current_active_user(
 
 
 @app.get("/")
-async def download_file():
-    file_path = 'test.py'
-    # Specify the filename for the downloaded file
-    filename = 'test.py'
-    
-    # Check if file exists
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail="File not found")
-    
-    # Return the file as a response
-    return FileResponse(file_path, filename=filename)
+def read_root():
+    return {"Hello": "World"}
 
 
 
@@ -318,7 +309,7 @@ headers = {"Authorization": "Bearer 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"}
 
 def get_headlines(stock_name):
 
-    stock_name = stock_name[:-3]  # To remove .NS when passed from the backend
+    # stock_name = stock_name[:-3]  # To remove .NS when passed from the backend
     googlenews = GoogleNews(lang='en', region='IN', period='7d')
     googlenews.get_news(stock_name+' stock news')
     headlines = googlenews.get_texts()
