@@ -20,7 +20,7 @@ export const Footer = () => {
       // data-aos-mirror="true"
     >
       <div className="container mx-auto py-3">
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <a
             href="https://github.com/Arjun-254"
             target="_blank"
@@ -45,7 +45,7 @@ export const Footer = () => {
           >
             <IoMdPaper className="w-8 h-8" />
           </a>
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full border-t border-gray-600"></div>
