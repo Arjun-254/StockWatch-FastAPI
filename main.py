@@ -205,15 +205,25 @@ async def getLists(
 async def stock_data(request: TickerRequest):
     ticker = request.ticker
     stock = yf.Ticker(ticker)
-    stock_prices = stock.history(period='1d', interval='2m')['Close']
-    prev_close = stock.history(period='5d')['Close'][-2]
 
-    # Convert the DataFrame to an array of objects with 'date' and 'closePrice' properties
+    stock_history = stock.history(period='1d', interval='2m')
+    if stock_history.empty:
+        raise HTTPException(status_code=404, detail="No intraday data found for the provided ticker")
+
+    stock_prices = stock_history['Close']
+
+    past_5d_history = stock.history(period='5d')
+    if past_5d_history.empty or len(past_5d_history['Close']) < 2:
+        raise HTTPException(status_code=404, detail="Not enough data to determine previous close")
+
+    prev_close = past_5d_history['Close'].iloc[-2]
+
     formatted_prices = [
         {"date": str(date), "closePrice": stock_prices[date]} for date in stock_prices.index
     ]
 
     return {"stockPrices": formatted_prices, "prevClose": prev_close}
+
 
 
 stocks = [
